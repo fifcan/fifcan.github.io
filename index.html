@@ -1,1 +1,24 @@
-Hello world !
+<html>
+<head>
+    <script src="https://keycloak.fifcan.org/js/keycloak.js"></script>
+    <script>
+        function initKeycloak() {
+            const keycloak = new Keycloak();
+            keycloak.init()
+              .then(function(authenticated) {
+                document.getElementById('authenticated').innerHTML = (authenticated ? 'authenticated' : 'not authenticated');
+              })
+              .catch(function() {
+                document.getElementById('authenticated').innerHTML = 'failed to initialize';
+              });
+        }
+    </script>
+</head>
+<body onload="initKeycloak()">
+  <h1>Identification via un royaume Keycloak</h1>
+  <p>
+    <label>Identification : </label>
+    <span id="authenticated">Chargement en cours</span>
+  </p>
+</body>
+</html>
