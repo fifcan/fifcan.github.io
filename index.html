@@ -1,16 +1,23 @@
 <html>
 <head>
-    <script src="https://keycloak.fifcan.org/js/keycloak.js"></script>
+    <script src="https://keycloak.fifcan.org/auth/js/keycloak.js"></script>
     <script>
         function initKeycloak() {
-            const keycloak = new Keycloak();
-            keycloak.init()
-              .then(function(authenticated) {
+            const keycloak = new Keycloak({
+                url: 'https://keycloak.fifcan.org',
+                realm: 'fifcan.github.io',
+                clientId: 'fifcan.github.io'
+            });
+            keycloak.init({
+                onLoad: 'check-sso',
+                silentCheckSsoRedirectUri: window.location.origin + '/silent-check-sso.html'
+            })
+            .then(function(authenticated) {
                 document.getElementById('authenticated').innerHTML = (authenticated ? 'authenticated' : 'not authenticated');
-              })
-              .catch(function() {
+            })
+            .catch(function() {
                 document.getElementById('authenticated').innerHTML = 'failed to initialize';
-              });
+            });
         }
     </script>
 </head>
